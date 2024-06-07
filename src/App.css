@@ -1,0 +1,112 @@
+* {
+  --primary-color: #b5d8ff;
+  --primary-color-light: #e3f1ff;
+  --primary-color-dark: #5c9ce5;
+}
+body {
+  background-color: var(--primary-color);
+}
+.container {
+  display: grid;
+  grid-template-columns: 0.5fr 3fr;
+  margin: 3rem;
+}
+.sidenav {
+  background-color: var(--primary-color-dark);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3rem;
+  border: 1px #e3f1ff solid;
+  border-radius: 10px;
+}
+.sidenav-element {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: none;
+  background: none;
+  color: white;
+  height: 3rem;
+  width: 100%;
+}
+.sidenav-element:hover {
+  background-color: white;
+  color: #b5d8ff;
+  cursor: pointer;
+}
+.icons {
+  height: 1rem;
+  width: 1rem;
+  margin-left: 0.5rem;
+}
+.main {
+  padding: 2rem;
+  background-color: var(--primary-color-light);
+  border: 1px #e3f1ff solid;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 2rem;
+}
+.search {
+  margin: 0 auto auto auto;
+}
+.search input {
+  height: 2rem;
+  border: none;
+  border-radius: 10px;
+  padding-left: 1rem;
+  margin-left: 0.5rem;
+}
+.hero {
+  display: grid;
+  grid-template-columns: 2fr 2fr;
+}
+.map {
+  background-color: #fff;
+  width: 90%;
+  border-radius: 10px;
+}
+.weather-card {
+  color: #00346f;
+  width: 90%;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  background-image: url(./images/sunny.jpg);
+  background-size: cover;
+}
+.weather-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.tempDeg {
+  font-size: 3rem;
+}
+.weather-details {
+  display: flex;
+  justify-content: space-evenly;
+}
+.details {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  width: 20%;
+  background-color: var(--primary-color);
+  border-radius: 10px;
+}
+.weather-data {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.2rem;
+}
+.weather-icon {
+  height: 2.5rem;
+  width: 2.5rem;
+}
