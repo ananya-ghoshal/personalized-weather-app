@@ -64,8 +64,9 @@ body {
   display: grid;
   grid-template-columns: 2fr 2fr;
 }
-.map {
-  background-color: #fff;
+.user-groups {
+  background-color: white;
+  display: none;
   width: 90%;
   border-radius: 10px;
 }
