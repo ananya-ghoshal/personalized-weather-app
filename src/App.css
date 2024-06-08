@@ -52,9 +52,16 @@ body {
 }
 .search {
   margin: 0 auto auto auto;
+  display: flex;
+  gap: 10rem;
+}
+.search_city {
+  display: flex;
+  gap: 1rem;
 }
 .search input {
   height: 2rem;
+  width: q0rem;
   border: none;
   border-radius: 10px;
   padding-left: 1rem;
@@ -64,14 +71,22 @@ body {
   display: grid;
   grid-template-columns: 2fr 2fr;
 }
+.location {
+  display: flex;
+  gap: 2rem;
+}
 .user-groups {
   background-color: white;
   display: none;
   width: 90%;
   border-radius: 10px;
 }
+#crops {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .weather-card {
-  color: #00346f;
   width: 90%;
   border-radius: 10px;
   display: flex;

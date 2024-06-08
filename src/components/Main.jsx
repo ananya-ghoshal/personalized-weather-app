@@ -1,26 +1,28 @@
 import { useState } from "react";
 import React from "react";
 import axios from "axios";
+
 import Search from "../icons/search.svg";
-import Clear from "../images/clear.png";
-import Clouds from "../images/clouds.png";
-import Drizzle from "../images/drizzle.png";
-import Humidity from "../images/humidity.png";
-import Mist from "../images/mist.png";
-import Rain from "../images/rain.png";
-import Snow from "../images/snow.png";
-import Wind from "../images/wind.png";
-import Pressure from "../images/pressure.png";
-import Sunny from "../images/sunny.jpg";
 import Dashboard from "../icons/dashboard.svg";
 import TrafficIcon from "../icons/traffic.svg";
 import CropIcon from "../icons/crops.svg";
 import EventIcon from "../icons/events.svg";
+import CalendarIcon from "../icons/events.svg";
+import LocationIcon from "../icons/current-location.png";
+
+import Clear from "../images/clear.png";
+import Humidity from "../images/humidity.png";
+import Wind from "../images/wind.png";
+import Pressure from "../images/pressure.png";
 
 function Main() {
+  const currentDate = new Date().toLocaleDateString();
+  const currentTime = new Date().toLocaleTimeString();
   const [data, setData] = useState({});
   const [location, setLocation] = useState("");
+  const [cropData, setCropData] = useState("");
   const url = `https://api.openweathermap.org/data/2.5/weather?units=metric&q=${location}&units=imperial&appid=e191f9c1ba3604661727c459541f1b8c`;
+
   const searchLocation = (event) => {
     if (event.key === "Enter") {
       axios.get(url).then((response) => {
@@ -30,10 +32,17 @@ function Main() {
       setLocation("");
     }
   };
-
-  // // function to handle dashboard section
   const handleDashboard = (event, tab) => {
+    const latitude = data.coord.lat;
+    const longitude = data.coord.lon;
     let i, sidenavElement, userGroups;
+    const cropUrl = `https://api.weatherbit.io/v2.0/forecast/agweather?lat=${latitude}&lon=${longitude}&key=34ee2d984aec4bebb6b5abf5802688a6`;
+    const eventUrl = `api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=e191f9c1ba3604661727c459541f1b8c`;
+    console.log(eventUrl);
+    axios.get(cropUrl).then((response) => {
+      setCropData(response.data);
+      console.log(response.data);
+    });
     // Get all elements with class="sidenavElement" and hide them
     sidenavElement = document.getElementsByClassName("user-groups");
     for (i = 0; i < sidenavElement.length; i++) {
@@ -50,6 +59,7 @@ function Main() {
     document.getElementById(tab).style.display = "flex";
     event.currentTarget.className += " active";
   };
+
   return (
     <div className="container">
       <div className="sidenav">
@@ -91,23 +101,38 @@ function Main() {
 
       <div className="main">
         <div className="search">
-          <img src={Search} className="icons" />
-          <input
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            onKeyPress={searchLocation}
-            placeholder="Enter Location"
-            type="text"
-          />
+          <div className="search_city">
+            <img src={Search} className="icons" />
+            <input
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              onKeyPress={searchLocation}
+              placeholder="Enter Location"
+              type="text"
+            />
+            <img src={LocationIcon} className="icons" />
+          </div>
+          <div className="search_date">
+            <div className="search_date">
+              <img src={CalendarIcon} className="icons" />
+              <input type="date" placeholder="Enter date"></input>
+            </div>
+          </div>
         </div>
 
         {data.name !== undefined && (
           <>
+            {/* HERO SECTION  */}
             <div className="hero">
+              {/* Weather card  */}
               <div className="weather-card">
+                {/* location  */}
                 <div className="location">
                   <p>{data.name}</p>
+                  <p>{currentDate}</p>
+                  <p>{currentTime}</p>
                 </div>
+                {/* Temperature display  */}
                 <div className="weather-display">
                   <div className="temp">
                     {data.main.temp > 0 ? (
@@ -122,6 +147,7 @@ function Main() {
                       </p>
                     )}
                   </div>
+                  {/* Temperature description  */}
                   <div className="description">
                     <p>{data.weather[0].main}</p>
                   </div>
@@ -142,7 +168,13 @@ function Main() {
               </div>
 
               <div id="crops" className="user-groups">
-                crops
+                <p>
+                  Bulk Soil Density :{cropData.data[0].bulk_soil_density} kg/m^3
+                </p>
+                <p>Max Skin Temperature :{cropData.data[0].skin_temp_max} C</p>
+                <p>Min Skin Temperature :{cropData.data[0].skin_temp_min} C</p>
+                <p>Accumulated Precipitation :{cropData.data[0].precip} mm</p>
+                <p>Avg Soil Moisture :{cropData.data[0].soilm_10_40cm} mm</p>
               </div>
 
               <div id="events" className="user-groups">
