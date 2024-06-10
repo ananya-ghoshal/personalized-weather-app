@@ -81,11 +81,7 @@ body {
   width: 90%;
   border-radius: 10px;
 }
-#crops {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+
 .weather-card {
   width: 90%;
   border-radius: 10px;
