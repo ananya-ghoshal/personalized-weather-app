@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 import axios from "axios";
 
@@ -11,6 +11,7 @@ import CalendarIcon from "../icons/events.svg";
 import LocationIcon from "../icons/current-location.png";
 
 import Clear from "../images/clear.png";
+import Cloudy from "../images/cloudy.jpg";
 import Humidity from "../images/humidity.png";
 import Wind from "../images/wind.png";
 import Pressure from "../images/pressure.png";
@@ -21,8 +22,8 @@ function Main() {
   const [data, setData] = useState({});
   const [location, setLocation] = useState("");
   const [cropData, setCropData] = useState("");
-  const url = `https://api.openweathermap.org/data/2.5/weather?units=metric&q=${location}&units=imperial&appid=e191f9c1ba3604661727c459541f1b8c`;
-
+  const apiKey = "e191f9c1ba3604661727c459541f1b8c";
+  const url = `https://api.openweathermap.org/data/2.5/weather?units=metric&q=${location}&units=imperial&appid=${apiKey}`;
   const searchLocation = (event) => {
     if (event.key === "Enter") {
       axios.get(url).then((response) => {
@@ -33,16 +34,7 @@ function Main() {
     }
   };
   const handleDashboard = (event, tab) => {
-    const latitude = data.coord.lat;
-    const longitude = data.coord.lon;
     let i, sidenavElement, userGroups;
-    const cropUrl = `https://api.weatherbit.io/v2.0/forecast/agweather?lat=${latitude}&lon=${longitude}&key=34ee2d984aec4bebb6b5abf5802688a6`;
-    const eventUrl = `api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=e191f9c1ba3604661727c459541f1b8c`;
-    console.log(eventUrl);
-    axios.get(cropUrl).then((response) => {
-      setCropData(response.data);
-      console.log(response.data);
-    });
     // Get all elements with class="sidenavElement" and hide them
     sidenavElement = document.getElementsByClassName("user-groups");
     for (i = 0; i < sidenavElement.length; i++) {
@@ -107,7 +99,7 @@ function Main() {
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               onKeyPress={searchLocation}
-              placeholder="Enter Location"
+              placeholder="Enter City"
               type="text"
             />
             <img src={LocationIcon} className="icons" />
@@ -168,13 +160,7 @@ function Main() {
               </div>
 
               <div id="crops" className="user-groups">
-                <p>
-                  Bulk Soil Density :{cropData.data[0].bulk_soil_density} kg/m^3
-                </p>
-                <p>Max Skin Temperature :{cropData.data[0].skin_temp_max} C</p>
-                <p>Min Skin Temperature :{cropData.data[0].skin_temp_min} C</p>
-                <p>Accumulated Precipitation :{cropData.data[0].precip} mm</p>
-                <p>Avg Soil Moisture :{cropData.data[0].soilm_10_40cm} mm</p>
+                crop yield data
               </div>
 
               <div id="events" className="user-groups">
